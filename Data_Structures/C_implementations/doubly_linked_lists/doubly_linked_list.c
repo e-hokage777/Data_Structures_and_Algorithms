@@ -74,6 +74,18 @@ void print(struct Node *head){
     printf("\n");
 }
 
+void reversePrint(struct Node *head){
+    struct Node *temp = head;
+    if(temp == NULL) return;
+    while(temp->next != NULL)
+        temp = temp->next;
+    while(temp != NULL){
+        printf("%d ", temp->data);
+        temp = temp->prev;
+    }
+    printf("\n");
+}
+
 int main(){
     struct Node* head = NULL;
     int n,x;
@@ -84,10 +96,10 @@ int main(){
         scanf("%d", &x);
         append(&head, x);
         // insertAtHead(&head, x);
-        print(head);
+        reversePrint(head);
     }
 
-    insertAt(&head, 1, 17);
+    // insertAt(&head, 1, 17);
     print(head);
     return 0;
 }
