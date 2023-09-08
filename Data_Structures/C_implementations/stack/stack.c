@@ -7,6 +7,10 @@ struct Stack{
 };
 
 void push(struct Stack *stackPointer, int data){
+    if(stackPointer->top == MAX_STACK_SIZE-1){
+        printf("Stack Overflow\n");
+        return;
+    }
     stackPointer->stackList[++stackPointer->top] = data;
 }
 
@@ -14,8 +18,12 @@ int pop(struct Stack *stackPointer){
     return stackPointer->stackList[stackPointer->top--];
 }
 
-int top(struct Stack *stackPointer){
-    return stackPointer->stackList[stackPointer->top];
+int top(struct Stack stack){
+    return stack.stackList[stack.top];
+}
+
+int isEmpty(struct Stack stack){
+    return (stack.top == -1);
 }
 
 void print(struct Stack stack){
@@ -35,7 +43,8 @@ int main(){
     print(stack1);
     printf("Popped value: %d \n", pop(&stack1));
     print(stack1);
-    printf("Value on top of stack: %d\n", top(&stack1));
+    printf("Value on top of stack: %d\n", top(stack1));
     print(stack1);
+    printf("Stack Empty ? => %d\n", isEmpty(stack1));
     return 0;
 }
