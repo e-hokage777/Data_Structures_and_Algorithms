@@ -1,4 +1,6 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 #include "str_rev_stack.h"
 
 void printString(char s[]){
