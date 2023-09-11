@@ -3,14 +3,6 @@
 #include <string.h>
 #include "str_rev_stack.h"
 
-void printString(char s[]){
-    int n = 0;
-    while(s[n] != 0){
-        printf("%c", s[n]);
-        n+=1;
-    }
-    printf("\n");
-}
 
 void reverseString2(char s[]){
     int i,j;
@@ -29,8 +21,8 @@ void reverseString2(char s[]){
 
 int main(){
     char string[20] = "something";
-    printString(string);
+    printf("%s\n", string);
     reverseString(string); // reversing the string
-    printString(string);
+    printf("%s\n", string);
     return 0;
 }
