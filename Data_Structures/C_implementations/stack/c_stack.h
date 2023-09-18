@@ -41,7 +41,7 @@ void print(struct Node top){
     struct Node *temp = top.link;
     printf("Stack content: ");
     while(temp != NULL){
-        printf("%d ", temp->data);
+        printf("%c ", temp->data);
         temp = temp->link;
     }
     
@@ -104,8 +104,6 @@ int checkBalancedParenthesis(char expression[]){
             push(&bStack, expression[i]);
         }
         else if(isClosingParenth(expression[i])){
-            // if(!isEmpty(bStack))
-            //     printf("%c\n", expression[i]);
             if(!isMatchingClosingParenth(pop(&bStack), expression[i])){
                 return 0;
             }
