@@ -43,18 +43,20 @@ int isOperation(char c)
 }
 
 // function to check if equal precedence
-int isEqualPrecedence(char a, char b){
-    if(a == b){
+int isEqualPrecedence(char a, char b)
+{
+    if (a == b)
+    {
         return 1;
     }
 
-    if(a == '+' && b == '-')
+    if (a == '+' && b == '-')
         return 1;
-    if(a == '-' && b == '+')
+    if (a == '-' && b == '+')
         return 1;
-    if(a == '*' && b == '/')
+    if (a == '*' && b == '/')
         return 1;
-    if(a == '/' && b == '*')
+    if (a == '/' && b == '*')
         return 1;
 
     return 0;
@@ -68,10 +70,40 @@ int isLowerPrecedence(char a, char b)
         return 1;
 
     // this also works for associativity rule as well as normal precedence stuff
-    if(a == '+' || a == '-')
+    if (a == '+' || a == '-')
         return 1;
 
     return 0;
+}
+
+// function to check where 'c' is an opening parenthesis
+int isOpeningParenthesis(char c)
+{
+    switch (c)
+    {
+    case '(':
+    case '{':
+    case '[':
+        return 1;
+        break;
+    default:
+        return 0;
+    }
+}
+
+// function to check where 'c' is a closing parenthesis
+int isClosingParenthesis(char c)
+{
+    switch (c)
+    {
+    case ')':
+    case '}':
+    case ']':
+        return 1;
+        break;
+    default:
+        return 0;
+    }
 }
 
 // function to convert infix to postfix
@@ -89,15 +121,35 @@ char *infix_to_postfix(char string[])
         {
             strncat(operand, &string[i], 1);
         }
-        else if (isOperation(string[i]))
+        else if (isClosingParenth(string[i]))
         {
-            strcat(res, operand);
-            strcat(res, " ");
-            strcpy(operand, "");
-
-            while (!isEmpty(opStack) && isLowerPrecedence(string[i], top(opStack)))
+            // appending operands in variable
+            if (operand != "")
             {
-                printf("Operation here \n");
+                strcat(res, operand);
+                strcat(res, " ");
+                strcpy(operand, "");
+            }
+            while (!isOpeningParenthesis(top(opStack)))
+            {
+                temp = pop(&opStack);
+                strncat(res, &temp, 1); // appending higher precedence operations
+                strcat(res, " ");
+            }
+
+            pop(&opStack);
+        }
+        else if (isOperation(string[i]) || isOpeningParenthesis(string[i]))
+        {
+            if (operand != "")
+            {
+                strcat(res, operand);
+                strcat(res, " ");
+                strcpy(operand, "");
+            }
+
+            while (!isEmpty(opStack) && !isOpeningParenthesis(top(opStack)) && isLowerPrecedence(string[i], top(opStack)))
+            {
                 temp = pop(&opStack);
                 strncat(res, &temp, 1); // appending higher precedence operations
                 strcat(res, " ");
@@ -108,17 +160,16 @@ char *infix_to_postfix(char string[])
     }
 
     // appending operands in variable
-    if(operand != "")
+    if (operand != "")
         strcat(res, operand);
 
     // appending remaining operations
-    while(!isEmpty(opStack)){
+    while (!isEmpty(opStack))
+    {
         temp = pop(&opStack);
         strcat(res, " ");
         strncat(res, &temp, 1);
     }
-
-    
 
     printf("%s\n", res);
 }
