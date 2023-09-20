@@ -114,6 +114,7 @@ char *infix_to_postfix(char string[])
     opStack.link = NULL;
     char res[MAX_STR_SIZE] = "";
     char operand[MAX_STR_SIZE] = "";
+    char empty[2] = "";
     char temp; // to hold temporary characters for `strncat` function
     for (int i = 0; i < strlen(string); ++i)
     {
@@ -124,7 +125,7 @@ char *infix_to_postfix(char string[])
         else if (isClosingParenth(string[i]))
         {
             // appending operands in variable
-            if (operand != "")
+            if (strcmp(operand, empty) != 0)
             {
                 strcat(res, operand);
                 strcat(res, " ");
@@ -136,13 +137,13 @@ char *infix_to_postfix(char string[])
                 strncat(res, &temp, 1); // appending higher precedence operations
                 strcat(res, " ");
             }
-
             pop(&opStack);
         }
         else if (isOperation(string[i]) || isOpeningParenthesis(string[i]))
         {
-            if (operand != "")
+            if (strcmp(operand, empty) != 0)
             {
+                printf("%c\n", string[i]);
                 strcat(res, operand);
                 strcat(res, " ");
                 strcpy(operand, "");
@@ -160,7 +161,7 @@ char *infix_to_postfix(char string[])
     }
 
     // appending operands in variable
-    if (operand != "")
+    if (strcmp(operand, empty) != 0)
         strcat(res, operand);
 
     // appending remaining operations
