@@ -107,7 +107,7 @@ int isClosingParenthesis(char c)
 }
 
 // function to convert infix to postfix
-char *infix_to_postfix(char string[])
+void infix_to_postfix(char string[], char destination[])
 {
     struct Node opStack;
     opStack.data = NULL;
@@ -171,14 +171,5 @@ char *infix_to_postfix(char string[])
         strncat(res, &temp, 1);
     }
 
-    printf("%s\n", res);
-}
-
-int main()
-{
-    char expression[MAX_STR_SIZE];
-    printf("Enter your expression: ");
-    scanf("%[^\n]%*c", expression);
-    infix_to_postfix(expression);
-    return 0;
+    strcpy(destination, res);
 }

@@ -1,3 +1,6 @@
+#ifndef C_STACK
+#define C_STACK
+
 #include<stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -112,3 +115,5 @@ int checkBalancedParenthesis(char expression[]){
 
     return (isEmpty(bStack));
 }
+
+#endif
