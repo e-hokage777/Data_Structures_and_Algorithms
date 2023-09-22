@@ -1,72 +1,74 @@
-#include  <stdio.h>
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "../c_stack.h"
+// #include "../c_stack.h"
+#include "../f_stack.h"
 #include "infix_to_postfix.h"
 
 #define MAX_STR_SIZE 80
 
-int binEval(int value1, int value2, char operation){
-
+float binEval(float value1, float value2, char operation)
+{
+    switch (operation)
+    {
+    case '*':
+        return value1 * value2;
+        break;
+    case '/':
+        return value1 / value2;
+        break;
+    case '+':
+        return value1 + value2;
+        break;
+    case '-':
+        return value1 - value2;
+        break;
+    default:
+        return 0;
+    }
 }
 
-int eval_postfix(char expression[]){
-    struct Node opStack;
-    opStack.data = NULL;
-    opStack.link = NULL;
-    char operand[MAX_STR_SIZE] = "";
-    int operand1;
-    int operand2;
-    for(int i = 0; i < strlen(expression); ++i){
-        if(!isOperation(expression[i])){
-            push(&opStack, expression[i]);
+float eval_postfix(char expression[])
+{
+    struct F_Stack fStack;
+    fStack.link = NULL;
+    char operand[MAX_STR_SIZE];
+    for (int i = 0; i < strlen(expression); ++i)
+    {
+        if (isOperand(expression[i]))
+        {
+            strncat(operand, &expression[i], 1);
         }
-        else{
-            // removing all while spaces
-            while(!isEmpty(opStack) && !isOperand(top(opStack)))
-                pop(&opStack);
-
-            char value;
-            while(!isEmpty(opStack) && isOperand(top(opStack))){
-                value = pop(&opStack);
-                strncat(operand, &value, 1);
+        else if (expression[i] == ' ')
+        {
+            if (strlen(operand) > 0)
+            {
+                float value;
+                sscanf(operand, "%f", &value);
+                f_push(&fStack, value);
+                strcpy(operand, "");
             }
-            // removing all while spaces
-            while(!isEmpty(opStack) && !isOperand(top(opStack)))
-                pop(&opStack);
-            sscanf(operand, "%d", &operand1); // storing first value as first operand
-            printf("Operand 1: %d\n", operand1);
-
-            strcpy(operand, ""); // emptying the operand
-
-            while(!isEmpty(opStack) && top(opStack) != ' '){
-                value = pop(&opStack);
-                strncat(operand, &value, 1);
-            }
-
-            // removing all while spaces
-            while(!isEmpty(opStack) && !isOperand(top(opStack)))
-                pop(&opStack);
-
-            sscanf(operand, "%d", &operand2);
-            printf("Operand 2: %d\n", operand2);
-
+        }
+        else if (isOperation(expression[i]))
+        {
+            float op2 = f_pop(&fStack);
+            float op1 = f_pop(&fStack);
+            float res = binEval(op1, op2, expression[i]);
+            f_push(&fStack, res);
         }
     }
 
-// NB: THIS IS A SERIOUS FLOW OF THIS IMPLEMENTATION !!!
-//     Experssion => 12*14
-//      Operand 1: 41 !!!
-//      Operand 2: 21 !!!
-//      TIP: when space reached convert to in and sore in int stack
+    return f_top(fStack);
+
 }
 
-int main(){
+int main()
+{
     char expression[MAX_STR_SIZE];
     char res[MAX_STR_SIZE];
     printf("Experssion => ");
     scanf("%[^\n]%*c", &expression);
     infix_to_postfix(expression, res);
-    printf("%s\n", res);
-    eval_postfix(res);
+    float eval_res = eval_postfix(res);
+    printf("Evaluation Result: %.3f", eval_res);
 }
