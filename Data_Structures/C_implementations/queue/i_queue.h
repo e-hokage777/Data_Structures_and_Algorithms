@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define MAX_QUEUE_SIZE 80
+#define MAX_QUEUE_SIZE 3
 
 
 struct I_Queue{
@@ -21,9 +21,10 @@ int isEmpty(struct I_Queue queue){
 // function to add element at the rear of the queue
 void enqueue(struct I_Queue *queue, int data){
     if(isEmpty(*queue)){
+        printf("first enqueue\n");
         queue->front = queue->rear = 0;
     }else{
-        queue->rear+=1;
+        queue->rear = (queue->rear + 1) % MAX_QUEUE_SIZE;
     }
     queue->data[queue->rear] = data;
 }
@@ -42,17 +43,30 @@ int dequeue(struct I_Queue *queue){
         queue->rear = -1;
     }
     else{
-        queue->front+=1;
+        queue->front = (queue->front + 1) % MAX_QUEUE_SIZE;
     }
+
+    return return_value;
+}
+
+int peak_front(struct I_Queue queue){
+    if(!isEmpty(queue))
+        return queue.data[queue.front];
+}
+
+int peak_rear(struct I_Queue queue){
+    if(!isEmpty(queue))
+        return queue.data[queue.rear];
 }
 
 // function to print all the elements in the queue
 void iqueue_print(struct I_Queue queue){
     int index = queue.front;
-    while(index <= queue.rear){
+    while(index != queue.rear){
         printf("%d ", queue.data[index]);
-        index = index + 1;
+        index = (index + 1) % MAX_QUEUE_SIZE;
     }
+    printf("%d ", queue.data[index]);
     printf("\n");
 }
 
