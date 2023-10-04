@@ -30,6 +30,7 @@ void insertInBST(struct BstNode** rootPtr, int data){
     }
 }
 
+// function to search for a value in the binary tree
 int searchBST(struct BstNode* rootPtr, int data){
     if(rootPtr == NULL)
         return 0;
@@ -40,4 +41,30 @@ int searchBST(struct BstNode* rootPtr, int data){
     else{
         return searchBST(rootPtr->right, data);
     }
+}
+
+// function to find minimum value in the tree
+int bstFindMin(struct BstNode *nodePtr){
+    if(nodePtr == NULL){
+        printf("Error: Empty tree");
+        return NULL;
+    }
+    else if(nodePtr->left == NULL){
+        return nodePtr->data;
+    }
+    
+    return bstFindMin(nodePtr->left);
+}
+
+// function to find maximum value in the tree
+int bstFindMax(struct BstNode *nodePtr){
+    if(nodePtr == NULL){
+        printf("Error: Empty tree");
+        return NULL;
+    }
+    else if(nodePtr->right == NULL){
+        return nodePtr->data;
+    }
+    
+    return bstFindMax(nodePtr->right);
 }

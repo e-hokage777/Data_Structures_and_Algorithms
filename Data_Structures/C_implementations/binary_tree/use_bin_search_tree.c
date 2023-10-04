@@ -10,10 +10,10 @@ int main(){
     insertInBST(&rootNodePtr, 3);
     insertInBST(&rootNodePtr, 8);
     insertInBST(&rootNodePtr, 6);
+    insertInBST(&rootNodePtr, 20);
+    insertInBST(&rootNodePtr, 1);
+    printf("Min: %d\n", bstFindMin(rootNodePtr));
+    printf("Max: %d\n", bstFindMax(rootNodePtr));
 
-    if(searchBST(rootNodePtr, 18))
-        printf("Found\n");
-    else
-        printf("Not found\n");
     return 0;
 }
