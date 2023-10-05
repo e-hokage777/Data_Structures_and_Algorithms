@@ -68,3 +68,16 @@ int bstFindMax(struct BstNode *nodePtr){
     
     return bstFindMax(nodePtr->right);
 }
+
+int maxInt(int a, int b){
+    if(a > b)
+        return a;
+    return b;
+}
+
+int bstHeight(struct BstNode *nodePtr){
+    if(nodePtr == NULL)
+        return -1;
+
+    return(maxInt(bstHeight(nodePtr->left), bstHeight(nodePtr->right)) + 1);
+}

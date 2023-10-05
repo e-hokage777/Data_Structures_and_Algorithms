@@ -11,9 +11,11 @@ int main(){
     insertInBST(&rootNodePtr, 8);
     insertInBST(&rootNodePtr, 6);
     insertInBST(&rootNodePtr, 20);
+    insertInBST(&rootNodePtr, 21);
     insertInBST(&rootNodePtr, 1);
     printf("Min: %d\n", bstFindMin(rootNodePtr));
     printf("Max: %d\n", bstFindMax(rootNodePtr));
+    printf("Height of Tree %d\n", bstHeight(rootNodePtr));
 
     return 0;
 }
