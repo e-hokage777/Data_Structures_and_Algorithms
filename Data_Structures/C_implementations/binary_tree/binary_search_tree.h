@@ -2,6 +2,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include "./bst_node_queue.h"
 
 struct BstNode{
     int data;
@@ -80,4 +81,30 @@ int bstHeight(struct BstNode *nodePtr){
         return -1;
 
     return(maxInt(bstHeight(nodePtr->left), bstHeight(nodePtr->right)) + 1);
+}
+
+// function to do breadth first search
+void bstBfs(struct BstNode * root){
+    struct BST_NODE_QUEUE queue;
+    queue.front = -1;
+    queue.rear = -1;
+
+    // checking if bst is empty
+    if(root == NULL) return;
+
+    enqueue(&queue, root);
+
+    printf("Traversing: ");
+    while(!isEmpty(queue)){
+        struct BstNode *current = dequeue(&queue);
+        printf("%d ", current->data);
+
+        // pushing children into the queue
+        if(current->left != NULL)
+            enqueue(&queue, current->left);
+        if(current->right != NULL)
+            enqueue(&queue, current->right);
+    }
+
+    printf("\n");
 }

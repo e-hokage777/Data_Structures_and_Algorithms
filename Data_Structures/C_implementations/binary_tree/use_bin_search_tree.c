@@ -17,5 +17,8 @@ int main(){
     printf("Max: %d\n", bstFindMax(rootNodePtr));
     printf("Height of Tree %d\n", bstHeight(rootNodePtr));
 
+    // traversing the tree
+    bstBfs(rootNodePtr);
+
     return 0;
 }
