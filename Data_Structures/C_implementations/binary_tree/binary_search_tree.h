@@ -83,7 +83,8 @@ int bstHeight(struct BstNode *nodePtr){
     return(maxInt(bstHeight(nodePtr->left), bstHeight(nodePtr->right)) + 1);
 }
 
-// function to do breadth first search
+
+// Breadth First Search
 void bstBfs(struct BstNode * root){
     struct BST_NODE_QUEUE queue;
     queue.front = -1;
@@ -107,4 +108,42 @@ void bstBfs(struct BstNode * root){
     }
 
     printf("\n");
+}
+
+// Depth First Search (Preorder traversal)
+void bstDfsPre(struct BstNode *root){
+    if(root == NULL) return;
+
+    printf("%d ", root->data);
+
+    // calling function for left tree
+    bstDfsPre(root->left);
+    // calling function for right subtree
+    bstDfsPre(root->right);
+}
+
+// Depth First Search (Inorder traversal)
+void bstDfsIn(struct BstNode *root){
+    if(root == NULL) return;
+
+    // calling function for left tree
+    bstDfsIn(root->left);
+
+    printf("%d ", root->data);
+
+    // calling function for right subtree
+    bstDfsIn(root->right);
+}
+
+// Depth First Search (Inorder traversal)
+void bstDfsPost(struct BstNode *root){
+    if(root == NULL) return;
+
+    // calling function for left tree
+    bstDfsPost(root->left);
+
+    // calling function for right subtree
+    bstDfsPost(root->right);
+
+    printf("%d ", root->data);
 }

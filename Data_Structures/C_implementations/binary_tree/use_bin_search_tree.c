@@ -17,8 +17,20 @@ int main(){
     printf("Max: %d\n", bstFindMax(rootNodePtr));
     printf("Height of Tree %d\n", bstHeight(rootNodePtr));
 
-    // traversing the tree
+    // traversing the tree BFS
     bstBfs(rootNodePtr);
+    printf("DFS Traversal of tree (Preorder): ");
+    bstDfsPre(rootNodePtr);
+    printf("\n");
+
+    printf("DFS Traversal of tree (Inorder): ");
+    bstDfsIn(rootNodePtr);
+    printf("\n");
+
+
+    printf("DFS Traversal of tree (Postorder): ");
+    bstDfsPost(rootNodePtr);
+    printf("\n");
 
     return 0;
 }
