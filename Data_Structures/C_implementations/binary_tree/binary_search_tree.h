@@ -2,16 +2,19 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <limits.h>
 #include "./bst_node_queue.h"
 
-struct BstNode{
+struct BstNode
+{
     int data;
-    struct BstNode* left;
-    struct BstNode* right;
+    struct BstNode *left;
+    struct BstNode *right;
 };
 
-struct BstNode * newBstNode(int data){
-    struct BstNode* nodePtr = (struct BstNode*)malloc(sizeof(struct BstNode));
+struct BstNode *newBstNode(int data)
+{
+    struct BstNode *nodePtr = (struct BstNode *)malloc(sizeof(struct BstNode));
     nodePtr->data = data;
     nodePtr->left = NULL;
     nodePtr->right = NULL;
@@ -19,91 +22,107 @@ struct BstNode * newBstNode(int data){
     return nodePtr;
 }
 
-void insertInBST(struct BstNode** rootPtr, int data){
-    if(*rootPtr == NULL){
+void insertInBST(struct BstNode **rootPtr, int data)
+{
+    if (*rootPtr == NULL)
+    {
         *rootPtr = newBstNode(data);
     }
-    else if(data <= (*rootPtr)->data){
+    else if (data <= (*rootPtr)->data)
+    {
         insertInBST(&(*rootPtr)->left, data);
     }
-    else{
+    else
+    {
         insertInBST(&(*rootPtr)->right, data);
     }
 }
 
 // function to search for a value in the binary tree
-int searchBST(struct BstNode* rootPtr, int data){
-    if(rootPtr == NULL)
+int searchBST(struct BstNode *rootPtr, int data)
+{
+    if (rootPtr == NULL)
         return 0;
-    if(rootPtr->data == data)
+    if (rootPtr->data == data)
         return 1;
-    else if(data < rootPtr->data)
+    else if (data < rootPtr->data)
         return searchBST(rootPtr->left, data);
-    else{
+    else
+    {
         return searchBST(rootPtr->right, data);
     }
 }
 
 // function to find minimum value in the tree
-int bstFindMin(struct BstNode *nodePtr){
-    if(nodePtr == NULL){
+int bstFindMin(struct BstNode *nodePtr)
+{
+    if (nodePtr == NULL)
+    {
         printf("Error: Empty tree");
         return NULL;
     }
-    else if(nodePtr->left == NULL){
+    else if (nodePtr->left == NULL)
+    {
         return nodePtr->data;
     }
-    
+
     return bstFindMin(nodePtr->left);
 }
 
 // function to find maximum value in the tree
-int bstFindMax(struct BstNode *nodePtr){
-    if(nodePtr == NULL){
+int bstFindMax(struct BstNode *nodePtr)
+{
+    if (nodePtr == NULL)
+    {
         printf("Error: Empty tree");
         return NULL;
     }
-    else if(nodePtr->right == NULL){
+    else if (nodePtr->right == NULL)
+    {
         return nodePtr->data;
     }
-    
+
     return bstFindMax(nodePtr->right);
 }
 
-int maxInt(int a, int b){
-    if(a > b)
+int maxInt(int a, int b)
+{
+    if (a > b)
         return a;
     return b;
 }
 
-int bstHeight(struct BstNode *nodePtr){
-    if(nodePtr == NULL)
+int bstHeight(struct BstNode *nodePtr)
+{
+    if (nodePtr == NULL)
         return -1;
 
-    return(maxInt(bstHeight(nodePtr->left), bstHeight(nodePtr->right)) + 1);
+    return (maxInt(bstHeight(nodePtr->left), bstHeight(nodePtr->right)) + 1);
 }
 
-
 // Breadth First Search
-void bstBfs(struct BstNode * root){
+void bstBfs(struct BstNode *root)
+{
     struct BST_NODE_QUEUE queue;
     queue.front = -1;
     queue.rear = -1;
 
     // checking if bst is empty
-    if(root == NULL) return;
+    if (root == NULL)
+        return;
 
     enqueue(&queue, root);
 
     printf("Traversing: ");
-    while(!isEmpty(queue)){
+    while (!isEmpty(queue))
+    {
         struct BstNode *current = dequeue(&queue);
         printf("%d ", current->data);
 
         // pushing children into the queue
-        if(current->left != NULL)
+        if (current->left != NULL)
             enqueue(&queue, current->left);
-        if(current->right != NULL)
+        if (current->right != NULL)
             enqueue(&queue, current->right);
     }
 
@@ -111,8 +130,10 @@ void bstBfs(struct BstNode * root){
 }
 
 // Depth First Search (Preorder traversal)
-void bstDfsPre(struct BstNode *root){
-    if(root == NULL) return;
+void bstDfsPre(struct BstNode *root)
+{
+    if (root == NULL)
+        return;
 
     printf("%d ", root->data);
 
@@ -123,8 +144,10 @@ void bstDfsPre(struct BstNode *root){
 }
 
 // Depth First Search (Inorder traversal)
-void bstDfsIn(struct BstNode *root){
-    if(root == NULL) return;
+void bstDfsIn(struct BstNode *root)
+{
+    if (root == NULL)
+        return;
 
     // calling function for left tree
     bstDfsIn(root->left);
@@ -136,8 +159,10 @@ void bstDfsIn(struct BstNode *root){
 }
 
 // Depth First Search (Inorder traversal)
-void bstDfsPost(struct BstNode *root){
-    if(root == NULL) return;
+void bstDfsPost(struct BstNode *root)
+{
+    if (root == NULL)
+        return;
 
     // calling function for left tree
     bstDfsPost(root->left);
@@ -146,4 +171,68 @@ void bstDfsPost(struct BstNode *root){
     bstDfsPost(root->right);
 
     printf("%d ", root->data);
+}
+
+// Implementing expensive functions to check if a tree is a BST
+int isGreaterThanLeftSubtree(struct BstNode *root, int data)
+{
+    if (root == NULL)
+        return 1;
+
+    if (
+        data > root->data &&
+        isGreaterThanLeftSubtree(root->left, data) &&
+        isGreaterThanLeftSubtree(root->right, data))
+        return 1;
+
+    return 0;
+}
+
+int isLessThanRightSubtree(struct BstNode *root, int data)
+{
+    if (root == NULL)
+        return 1;
+
+    if (
+        data < root->data &&
+        isLessThanRightSubtree(root->left, data) &&
+        isLessThanRightSubtree(root->right, data))
+        return 1;
+
+    return 0;
+}
+
+int isBinarySearchTreeExpensive(struct BstNode *root)
+{
+    if (root == NULL)
+        return 1;
+
+    if (
+        isGreaterThanLeftSubtree(root->left, root->data) &&
+        isLessThanRightSubtree(root->right, root->data) &&
+        isBinarySearchTreeExpensive(root->left) &&
+        isBinarySearchTreeExpensive(root->right))
+        return 1;
+
+    return 0;
+}
+
+// Less expensive binary tree check
+int isBinarySearchTreeUtil(struct BstNode *root, int min, int max)
+{
+    if (root == NULL)
+        return 1;
+
+    if (
+        (root->data > min && root->data < max) &&
+        isBinarySearchTreeUtil(root->left, min, root->data) &&
+        isBinarySearchTreeUtil(root->right, root->data, max))
+        return 1;
+
+    return 0;
+}
+
+int isBinarySearchTree(struct BstNode *root)
+{
+    return isBinarySearchTreeUtil(root, INT_MIN, INT_MAX);
 }

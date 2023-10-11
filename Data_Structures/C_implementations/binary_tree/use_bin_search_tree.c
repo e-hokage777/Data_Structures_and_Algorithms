@@ -32,5 +32,16 @@ int main(){
     bstDfsPost(rootNodePtr);
     printf("\n");
 
+
+    // Checking whether tree is a BST
+    struct BstNode left = {8, NULL, NULL};
+    struct BstNode right = {12, NULL, NULL};
+    struct BstNode nnRoot = {5, &left, &right};
+    struct BstNode *nnRootPtr = &nnRoot; 
+    if(isBinarySearchTree(nnRootPtr))
+        printf("It is a Binary Search Tree\n");
+    else
+        printf("Not a Binary Search Tree\n");
+
     return 0;
 }
