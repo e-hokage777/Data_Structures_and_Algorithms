@@ -236,3 +236,71 @@ int isBinarySearchTree(struct BstNode *root)
 {
     return isBinarySearchTreeUtil(root, INT_MIN, INT_MAX);
 }
+
+// Utility function for deletion
+// void delUtil(struct BstNode *parent, struct BstNode *target){
+//     // handling situation where target node is a leaf node
+//     if(target->left == NULL && target->right == NULL){
+
+//     }
+// }
+void delLeftBstNode(struct BstNode *root){
+    struct BstNode *target = root->left;
+    
+    //handling situation where target is a leaf node
+    if(target->left == NULL && target->right == NULL){
+        root->left == NULL;
+        free(target);
+    }
+    else if(target->left != NULL){
+        root->left = target->left;
+        free(target);
+    }
+    else if(target->right != NULL){
+        root->left = target->right;
+        free(target);
+    }
+    else{
+        int max = bstFindMax(target->left);
+        target->data = max;
+        deleteBstNode(target->left, max);
+    }
+}
+
+void delRightBstNode(struct BstNode *root){
+    struct BstNode *target = root->right;
+    //handling situation where target is a leaf node
+    if(target->right == NULL && target->right == NULL){
+        root->right == NULL;
+        free(target);
+    }
+    else if(target->right != NULL && target->right == NULL){
+        root->right = target->right;
+        free(target);
+    }
+    else if(target->right == NULL && target->right != NULL){
+        root->right = target->right;
+        free(target);
+    }
+    else{
+        int min = bstFindMin(target->right);
+        target->data = min;
+        deleteBstNode(target->right, min);
+    }
+}
+
+// Function to delete node from a binary tree
+void deleteBstNode(struct BstNode *root, int data){
+    if (root == NULL) return;
+    printf("%d\n", root->data);
+    // handle case where root is target
+    if(root->left != NULL && root->left->data == data){
+        delLeftBstNode(root);
+    }
+    if(root->right != NULL && root->right->data == data){
+        delRightBstNode(root);
+    }
+
+    deleteBstNode(root->left, data);
+    deleteBstNode(root->right, data);
+}

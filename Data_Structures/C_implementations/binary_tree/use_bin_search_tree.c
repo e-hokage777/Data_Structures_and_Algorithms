@@ -17,31 +17,33 @@ int main(){
     printf("Max: %d\n", bstFindMax(rootNodePtr));
     printf("Height of Tree %d\n", bstHeight(rootNodePtr));
 
+    deleteBstNode(rootNodePtr, 1);
+
     // traversing the tree BFS
-    bstBfs(rootNodePtr);
-    printf("DFS Traversal of tree (Preorder): ");
-    bstDfsPre(rootNodePtr);
-    printf("\n");
+    // bstBfs(rootNodePtr);
+    // printf("DFS Traversal of tree (Preorder): ");
+    // bstDfsPre(rootNodePtr);
+    // printf("\n");
 
     printf("DFS Traversal of tree (Inorder): ");
     bstDfsIn(rootNodePtr);
     printf("\n");
 
 
-    printf("DFS Traversal of tree (Postorder): ");
-    bstDfsPost(rootNodePtr);
-    printf("\n");
+    // printf("DFS Traversal of tree (Postorder): ");
+    // bstDfsPost(rootNodePtr);
+    // printf("\n");
 
 
     // Checking whether tree is a BST
-    struct BstNode left = {8, NULL, NULL};
-    struct BstNode right = {12, NULL, NULL};
-    struct BstNode nnRoot = {5, &left, &right};
-    struct BstNode *nnRootPtr = &nnRoot; 
-    if(isBinarySearchTree(nnRootPtr))
-        printf("It is a Binary Search Tree\n");
-    else
-        printf("Not a Binary Search Tree\n");
+    // struct BstNode left = {8, NULL, NULL};
+    // struct BstNode right = {12, NULL, NULL};
+    // struct BstNode nnRoot = {5, &left, &right};
+    // struct BstNode *nnRootPtr = &nnRoot; 
+    // if(isBinarySearchTree(nnRootPtr))
+    //     printf("It is a Binary Search Tree\n");
+    // else
+    //     printf("Not a Binary Search Tree\n");
 
     return 0;
 }
