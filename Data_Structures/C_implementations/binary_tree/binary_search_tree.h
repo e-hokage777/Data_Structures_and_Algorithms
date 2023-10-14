@@ -249,7 +249,7 @@ void delLeftBstNode(struct BstNode *root){
     
     //handling situation where target is a leaf node
     if(target->left == NULL && target->right == NULL){
-        root->left == NULL;
+        root->left = NULL;
         free(target);
     }
     else if(target->left != NULL){
@@ -271,14 +271,14 @@ void delRightBstNode(struct BstNode *root){
     struct BstNode *target = root->right;
     //handling situation where target is a leaf node
     if(target->right == NULL && target->right == NULL){
-        root->right == NULL;
+        root->right = NULL;
         free(target);
     }
-    else if(target->right != NULL && target->right == NULL){
+    else if(target->left != NULL){
         root->right = target->right;
         free(target);
     }
-    else if(target->right == NULL && target->right != NULL){
+    else if(target->right != NULL){
         root->right = target->right;
         free(target);
     }
@@ -296,6 +296,7 @@ void deleteBstNode(struct BstNode *root, int data){
     // handle case where root is target
     if(root->left != NULL && root->left->data == data){
         delLeftBstNode(root);
+        // printf("%p %d", root->left, root->data);
     }
     if(root->right != NULL && root->right->data == data){
         delRightBstNode(root);
