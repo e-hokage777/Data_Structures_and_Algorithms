@@ -17,7 +17,11 @@ int main(){
     printf("Max: %d\n", bstFindMax(rootNodePtr));
     printf("Height of Tree %d\n", bstHeight(rootNodePtr));
 
-    deleteBstNode(rootNodePtr, 20);
+    struct BstNode *successor = findInorderSuccessor(rootNodePtr,20);
+    if(successor != NULL)
+        printf("Successor: %d", successor->data);
+
+    // deleteBstNode(rootNodePtr, 5);
 
     // traversing the tree BFS
     // bstBfs(rootNodePtr);
@@ -25,9 +29,9 @@ int main(){
     // bstDfsPre(rootNodePtr);
     // printf("\n");
 
-    printf("DFS Traversal of tree (Inorder): ");
-    bstDfsIn(rootNodePtr);
-    printf("\n");
+    // printf("DFS Traversal of tree (Inorder): ");
+    // bstDfsIn(rootNodePtr);
+    // printf("\n");
 
 
     // printf("DFS Traversal of tree (Postorder): ");
