@@ -372,12 +372,8 @@ struct BstNode *findInorderSuccessor(struct BstNode *root, int data)
     if (target->right != NULL)
         return bstFindMinAddress(target->right);
 
-    struct BstNode *successor = root;
-    struct BstNode *current = NULL;
-    if (data < root->data)
-        current = root->left;
-    else
-        current = root->right;
+    struct BstNode *successor = NULL;
+    struct BstNode *current = root;
 
     while (current != NULL && current != target)
     {

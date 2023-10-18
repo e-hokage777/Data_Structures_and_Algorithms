@@ -17,9 +17,11 @@ int main(){
     printf("Max: %d\n", bstFindMax(rootNodePtr));
     printf("Height of Tree %d\n", bstHeight(rootNodePtr));
 
-    struct BstNode *successor = findInorderSuccessor(rootNodePtr,20);
+    struct BstNode *successor = findInorderSuccessor(rootNodePtr,6);
     if(successor != NULL)
         printf("Successor: %d", successor->data);
+    else
+        printf("Doesn't have a successor");
 
     // deleteBstNode(rootNodePtr, 5);
 
